@@ -35,3 +35,11 @@
 /home/strata/git/STRATA_Jetson/catkin/build/gtest/googlemock/gtest/CMakeFiles/list_install_components.dir
 /home/strata/git/STRATA_Jetson/catkin/build/gtest/googlemock/gtest/CMakeFiles/gtest.dir
 /home/strata/git/STRATA_Jetson/catkin/build/gtest/googlemock/gtest/CMakeFiles/rebuild_cache.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/install/strip.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/install/local.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/test.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/list_install_components.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/edit_cache.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/rebuild_cache.dir
+/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/install.dir
