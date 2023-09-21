@@ -7,8 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/strata/git/IMU/STRATA_Jetson/catkin/devel:$CMAKE_PREFIX_PATH"
-export PATH='/opt/ros/melodic/bin:/home/strata/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
 export PWD='/home/strata/git/IMU/STRATA_Jetson/catkin/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/strata/git/IMU/STRATA_Jetson/catkin/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/strata/git/STRATA_Jetson/catkin/src:/home/strata/git/IMU/STRATA_Jetson/catkin/src:$ROS_PACKAGE_PATH"

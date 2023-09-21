@@ -3,11 +3,13 @@
 #include <sstream>
 
 int main(int argc, char** argv){
-	ros::init(argc, argv, "talker");
+	ros::init(argc, argv, "imu");
 
 	ros::NodeHandle n;
 
 	ros::Publisher int_pub = n.advertise<std_msgs::Int32>("Chatter", 1000);
+
+	ROS_INFO("Starting...");
 
 	ros::Rate loop_rate(10);
 
@@ -15,13 +17,17 @@ int main(int argc, char** argv){
 	int count = 0;
 	while(ros::ok()){
 
-		int_pub.publish(count);
+		std_msgs::Int32 msg;
+
+		msg.data = count;
+		int_pub.publish(msg);
 
 		ros::spinOnce();
 
 		count++;
 		loop_rate.sleep();
 	}
+	ROS_INFO("Shutting down...");
 
 	return 0;
 	
