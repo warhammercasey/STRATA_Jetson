@@ -14,3 +14,4 @@ lanIp
 4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000 inet 138.67.224.149/20 brd 138.67.239.255 scope global dynamic noprefixroute wlan0 valid_lft 277sec preferred_lft 277sec
 4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000 inet 138.67.231.192/20 brd 138.67.239.255 scope global dynamic noprefixroute wlan0 valid_lft 3578sec preferred_lft 3578sec
 138.67.231.192
+4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000 inet 138.67.231.192/20 brd 138.67.239.255 scope global dynamic noprefixroute wlan0 valid_lft 2549sec preferred_lft 2549sec
