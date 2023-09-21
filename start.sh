@@ -1,4 +1,5 @@
 #!/bin/bash
+sleep 10
 cd /home/strata/git/startup/STRATA_Jetson
 lanIp=$(ip -f inet addr show wlan0)
 echo ${lanIp} >> ip.txt
