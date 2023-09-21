@@ -1,2 +1,2 @@
-
--DCATKIN_DEVEL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/install -G Unix Makefiles
+imu
+-DCATKIN_DEVEL_PREFIX=/home/strata/git/IMU/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/IMU/STRATA_Jetson/catkin/install -G Unix Makefiles
