@@ -1,2 +1,1 @@
-138.67.231.192
-4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000 inet 138.67.231.192/20 brd 138.67.239.255 scope global dynamic noprefixroute wlan0 valid_lft 2581sec preferred_lft 2581sec
+138.67.232.42
