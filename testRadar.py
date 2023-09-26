@@ -1,7 +1,7 @@
 from radariq import RadarIQ
 
 # Initialize the RadarIQ sensor (replace 'COMx' with the appropriate COM port)/
-sensor = RadarIQ(port='COMx', output_format=RadarIQ.OUTPUT_LIST)
+sensor = RadarIQ()
 
 # Start capturing data (continuous mode)
 sensor.start(samples=0)
