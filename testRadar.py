@@ -4,7 +4,7 @@ from radariq import RadarIQ
 sensor = RadarIQ()
 
 # Start capturing data (continuous mode)
-sensor.start(samples=0)
+sensor.start(samples=10)
 
 try:
     # Continuously fetch and print point cloud data
