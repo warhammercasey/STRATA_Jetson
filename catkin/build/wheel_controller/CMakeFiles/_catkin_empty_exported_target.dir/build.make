@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/strata/git/STRATA_Jetson/catkin/src
+CMAKE_SOURCE_DIR = /home/strata/git/IMU/STRATA_Jetson/catkin/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/strata/git/STRATA_Jetson/catkin/build
+CMAKE_BINARY_DIR = /home/strata/git/IMU/STRATA_Jetson/catkin/build
 
 # Utility rule file for _catkin_empty_exported_target.
 
@@ -63,10 +63,10 @@ wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/build: _catkin_emp
 .PHONY : wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/build
 
 wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	cd /home/strata/git/STRATA_Jetson/catkin/build/wheel_controller && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller && $(CMAKE_COMMAND) -P CMakeFiles/_catkin_empty_exported_target.dir/cmake_clean.cmake
 .PHONY : wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/depend:
-	cd /home/strata/git/STRATA_Jetson/catkin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/strata/git/STRATA_Jetson/catkin/src /home/strata/git/STRATA_Jetson/catkin/src/wheel_controller /home/strata/git/STRATA_Jetson/catkin/build /home/strata/git/STRATA_Jetson/catkin/build/wheel_controller /home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/strata/git/IMU/STRATA_Jetson/catkin/src /home/strata/git/IMU/STRATA_Jetson/catkin/src/wheel_controller /home/strata/git/IMU/STRATA_Jetson/catkin/build /home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller /home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : wheel_controller/CMakeFiles/_catkin_empty_exported_target.dir/depend
 
