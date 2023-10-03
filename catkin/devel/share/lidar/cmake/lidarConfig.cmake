@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/home/strata/git/STRATA_Jetson/catkin/devel/lib;/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(lidar_EXPORTED_TARGETS "")
+set(lidar_EXPORTED_TARGETS "lidar_generate_messages_cpp;lidar_generate_messages_eus;lidar_generate_messages_lisp;lidar_generate_messages_nodejs;lidar_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${lidar_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND lidar_EXPORTED_TARGETS ${${lidar_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "lidar-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${lidar_DIR}/${extra})

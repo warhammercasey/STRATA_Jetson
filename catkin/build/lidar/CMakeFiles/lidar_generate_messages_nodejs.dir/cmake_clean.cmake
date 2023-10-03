@@ -1,7 +1,3 @@
-file(REMOVE_RECURSE
-  "CMakeFiles/lidar_generate_messages_nodejs"
-  "../devel/share/gennodejs/ros/lidar/msg/point_msg.js"
-)
 
 # Per-language clean rules from dependency scanning.
 foreach(lang )

@@ -11,8 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  geometry_msgs
-  message_generation
   std_srvs
   sensor_msgs
   image_transport
@@ -55,10 +53,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  point_msg.msg
-)
+# add_message_files(
+#   FILES
+#   point_msg.msg
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -113,7 +111,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES lidar
- CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs message_runtime
+# CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs message_runtime
 #  DEPENDS system_lib
 )
 

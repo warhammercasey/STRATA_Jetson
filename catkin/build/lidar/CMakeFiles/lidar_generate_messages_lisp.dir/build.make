@@ -53,17 +53,6 @@ CMAKE_BINARY_DIR = /home/strata/git/IMU/STRATA_Jetson/catkin/build
 # Include the progress variables for this target.
 include lidar/CMakeFiles/lidar_generate_messages_lisp.dir/progress.make
 
-lidar/CMakeFiles/lidar_generate_messages_lisp: devel/share/common-lisp/ros/lidar/msg/point_msg.lisp
-
-
-devel/share/common-lisp/ros/lidar/msg/point_msg.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
-devel/share/common-lisp/ros/lidar/msg/point_msg.lisp: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg
-devel/share/common-lisp/ros/lidar/msg/point_msg.lisp: /opt/ros/melodic/share/geometry_msgs/msg/Vector3.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from lidar/point_msg.msg"
-	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg -Ilidar:/home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg -p lidar -o /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel/share/common-lisp/ros/lidar/msg
-
-lidar_generate_messages_lisp: lidar/CMakeFiles/lidar_generate_messages_lisp
-lidar_generate_messages_lisp: devel/share/common-lisp/ros/lidar/msg/point_msg.lisp
 lidar_generate_messages_lisp: lidar/CMakeFiles/lidar_generate_messages_lisp.dir/build.make
 
 .PHONY : lidar_generate_messages_lisp

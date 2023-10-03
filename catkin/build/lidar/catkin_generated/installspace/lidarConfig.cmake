@@ -68,13 +68,13 @@ set(lidar_CONFIG_INCLUDED TRUE)
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
   set(lidar_SOURCE_PREFIX /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar)
-  set(lidar_DEVEL_PREFIX /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel)
+  set(lidar_DEVEL_PREFIX /home/strata/git/IMU/STRATA_Jetson/catkin/devel)
   set(lidar_INSTALL_PREFIX "")
   set(lidar_PREFIX ${lidar_DEVEL_PREFIX})
 else()
   set(lidar_SOURCE_PREFIX "")
   set(lidar_DEVEL_PREFIX "")
-  set(lidar_INSTALL_PREFIX /usr/local)
+  set(lidar_INSTALL_PREFIX /home/strata/git/IMU/STRATA_Jetson/catkin/install)
   set(lidar_PREFIX ${lidar_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(lidar_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "include " STREQUAL " ")
+if(NOT " " STREQUAL " ")
   set(lidar_INCLUDE_DIRS "")
-  set(_include_dirs "include")
+  set(_include_dirs "")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /usr/local/lib;/home/strata/git/STRATA_Jetson/catkin/devel/lib;/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/strata/git/IMU/STRATA_Jetson/catkin/install/lib;/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +185,7 @@ foreach(t ${lidar_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;rospy;std_msgs;geometry_msgs;message_runtime")
+set(depends "")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

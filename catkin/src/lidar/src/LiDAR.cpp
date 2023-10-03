@@ -1,11 +1,19 @@
 #include "ros/ros.h"
 #include "std_msgs/Int32.h"
-#include "geomertry_msgs/Vector3.h"
 #include <sstream>
-
+#include <vector>
+#include <pcl/point_types.h>
 #include "HPS3DUser_IF.h"
 
-ros::Publisher msg_pub;
+
+typedef struct{
+	std::vector<HPS3D_PerPointCloudData_t> points;
+	uint16_t width;
+	uint16_t height;
+} PointCloudData_t;
+
+
+std::vector<PointCloudData_t> frameBuffer;
 
 static HPS3D_MeasureData_t g_measureData;
 
@@ -18,7 +26,6 @@ int main(int argc, char** argv){
 	ros::NodeHandle n;
 
 	ros::Publisher int_pub = n.advertise<std_msgs::Int32>("Chatter", 1000);
-	msg_pub = n.advertise<geometry_msgs::Vector3>("PointCloud", 1000);
 
 	ROS_INFO("Starting...");
 
@@ -59,7 +66,6 @@ int main(int argc, char** argv){
 	HPS3D_StartCapture(handle);
 
 
-
 	ros::Rate loop_rate(10);
 
 
@@ -87,12 +93,22 @@ int main(int argc, char** argv){
 
 
 static void EventCallBackFunc(int handle, int eventType, uint8_t *data,int dataLen, void *userPara){
+	PointCloudData_t point_data;
+	HPS3D_PerPointCloudData_t* dataptr;
+
 	switch((HPS3D_EventType_t)eventType){
 
 		case HPS3D_FULL_DEPTH_EVEN:	
 			HPS3D_ConvertToMeasureData(data, &g_measureData, (HPS3D_EventType_t)eventType);
 			ROS_INFO("Average distance: %d", g_measureData.full_depth_data.distance_average);
 			ROS_INFO("Width: %d\tHeight: %d\tPoints: %u", g_measureData.full_depth_data.point_cloud_data.width, g_measureData.full_depth_data.point_cloud_data.height, g_measureData.full_depth_data.point_cloud_data.points);
+
+			dataptr = g_measureData.full_depth_data.point_cloud_data.point_data;
+			point_data.points = std::vector<HPS3D_PerPointCloudData_t>(dataptr, dataptr + g_measureData.full_depth_data.point_cloud_data.points);
+			point_data.width = g_measureData.full_depth_data.point_cloud_data.width;
+			point_data.height = g_measureData.full_depth_data.point_cloud_data.height;
+			
+			frameBuffer.push_back(point_data);
 			
 			break;
 

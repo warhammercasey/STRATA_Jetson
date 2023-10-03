@@ -53,24 +53,6 @@ CMAKE_BINARY_DIR = /home/strata/git/IMU/STRATA_Jetson/catkin/build
 # Include the progress variables for this target.
 include lidar/CMakeFiles/lidar_generate_messages_py.dir/progress.make
 
-lidar/CMakeFiles/lidar_generate_messages_py: devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py
-lidar/CMakeFiles/lidar_generate_messages_py: devel/lib/python2.7/dist-packages/lidar/msg/__init__.py
-
-
-devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
-devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg
-devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py: /opt/ros/melodic/share/geometry_msgs/msg/Vector3.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG lidar/point_msg"
-	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg -Ilidar:/home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg -p lidar -o /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel/lib/python2.7/dist-packages/lidar/msg
-
-devel/lib/python2.7/dist-packages/lidar/msg/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
-devel/lib/python2.7/dist-packages/lidar/msg/__init__.py: devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for lidar"
-	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel/lib/python2.7/dist-packages/lidar/msg --initpy
-
-lidar_generate_messages_py: lidar/CMakeFiles/lidar_generate_messages_py
-lidar_generate_messages_py: devel/lib/python2.7/dist-packages/lidar/msg/_point_msg.py
-lidar_generate_messages_py: devel/lib/python2.7/dist-packages/lidar/msg/__init__.py
 lidar_generate_messages_py: lidar/CMakeFiles/lidar_generate_messages_py.dir/build.make
 
 .PHONY : lidar_generate_messages_py

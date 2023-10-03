@@ -1,4 +1,4 @@
-prefix=/usr/local
+prefix=/home/strata/git/IMU/STRATA_Jetson/catkin/install
 
 Name: wheel_controller
 Description: Description of wheel_controller

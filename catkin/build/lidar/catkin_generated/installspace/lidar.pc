@@ -1,8 +1,8 @@
-prefix=/usr/local
+prefix=/home/strata/git/IMU/STRATA_Jetson/catkin/install
 
 Name: lidar
 Description: Description of lidar
 Version: 0.0.0
-Cflags: -I${prefix}/include
+Cflags: 
 Libs: -L${prefix}/lib 
-Requires: roscpp rospy std_msgs geometry_msgs message_runtime
+Requires: 

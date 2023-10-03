@@ -53,23 +53,15 @@ CMAKE_BINARY_DIR = /home/strata/git/IMU/STRATA_Jetson/catkin/build
 # Include the progress variables for this target.
 include lidar/CMakeFiles/lidar_generate_messages_eus.dir/progress.make
 
-lidar/CMakeFiles/lidar_generate_messages_eus: devel/share/roseus/ros/lidar/msg/point_msg.l
-lidar/CMakeFiles/lidar_generate_messages_eus: devel/share/roseus/ros/lidar/manifest.l
+lidar/CMakeFiles/lidar_generate_messages_eus: /home/strata/git/IMU/STRATA_Jetson/catkin/devel/share/roseus/ros/lidar/manifest.l
 
 
-devel/share/roseus/ros/lidar/msg/point_msg.l: /opt/ros/melodic/lib/geneus/gen_eus.py
-devel/share/roseus/ros/lidar/msg/point_msg.l: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg
-devel/share/roseus/ros/lidar/msg/point_msg.l: /opt/ros/melodic/share/geometry_msgs/msg/Vector3.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from lidar/point_msg.msg"
-	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg/point_msg.msg -Ilidar:/home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg -p lidar -o /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel/share/roseus/ros/lidar/msg
-
-devel/share/roseus/ros/lidar/manifest.l: /opt/ros/melodic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for lidar"
-	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/strata/git/IMU/STRATA_Jetson/catkin/build/devel/share/roseus/ros/lidar lidar std_msgs geometry_msgs
+/home/strata/git/IMU/STRATA_Jetson/catkin/devel/share/roseus/ros/lidar/manifest.l: /opt/ros/melodic/lib/geneus/gen_eus.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp manifest code for lidar"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/strata/git/IMU/STRATA_Jetson/catkin/devel/share/roseus/ros/lidar lidar std_msgs geometry_msgs
 
 lidar_generate_messages_eus: lidar/CMakeFiles/lidar_generate_messages_eus
-lidar_generate_messages_eus: devel/share/roseus/ros/lidar/msg/point_msg.l
-lidar_generate_messages_eus: devel/share/roseus/ros/lidar/manifest.l
+lidar_generate_messages_eus: /home/strata/git/IMU/STRATA_Jetson/catkin/devel/share/roseus/ros/lidar/manifest.l
 lidar_generate_messages_eus: lidar/CMakeFiles/lidar_generate_messages_eus.dir/build.make
 
 .PHONY : lidar_generate_messages_eus
