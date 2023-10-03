@@ -1,0 +1,8 @@
+prefix=/home/strata/git/STRATA_Jetson/catkin/devel
+
+Name: radar
+Description: Description of radar
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
