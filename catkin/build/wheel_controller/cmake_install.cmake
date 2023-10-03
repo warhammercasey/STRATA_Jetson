@@ -1,8 +1,8 @@
-# Install script for directory: /home/strata/git/STRATA_Jetson/catkin/src/wheel_controller
+# Install script for directory: /home/strata/git/IMU/STRATA_Jetson/catkin/src/wheel_controller
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/strata/git/STRATA_Jetson/catkin/install")
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,21 +38,21 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controller.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controller.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheel_controller/cmake" TYPE FILE FILES
-    "/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controllerConfig.cmake"
-    "/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controllerConfig-version.cmake"
+    "/home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controllerConfig.cmake"
+    "/home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheel_controllerConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheel_controller" TYPE FILE FILES "/home/strata/git/STRATA_Jetson/catkin/src/wheel_controller/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/wheel_controller" TYPE FILE FILES "/home/strata/git/IMU/STRATA_Jetson/catkin/src/wheel_controller/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/wheel_controller" TYPE PROGRAM FILES "/home/strata/git/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheelControl.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/wheel_controller" TYPE PROGRAM FILES "/home/strata/git/IMU/STRATA_Jetson/catkin/build/wheel_controller/catkin_generated/installspace/wheelControl.py")
 endif()
 
