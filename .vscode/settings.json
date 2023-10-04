@@ -1,4 +1,5 @@
 {
   "cmake.sourceDirectory": "C:/Users/manfr/OneDrive - Colorado School of Mines/Undergrad/Senior Year/Senior Design/STRATA_Jetson/catkin/src",
-  "ros.distro": "foxy"
+  "ros.distro": "foxy",
+  "cmake.configureOnOpen": true
 }
