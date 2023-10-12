@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/strata/git/RADAR/STRATA_Jetson/catkin/build/devel/setup.sh
+    local-name: /home/strata/git/RADAR/STRATA_Jetson/catkin/devel/setup.sh
