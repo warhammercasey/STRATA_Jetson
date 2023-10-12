@@ -1,4 +1,4 @@
-prefix=/home/strata/git/STRATA_Jetson/catkin/devel
+prefix=/home/strata/git/RADAR/STRATA_Jetson/catkin/devel
 
 Name: radar
 Description: Description of radar

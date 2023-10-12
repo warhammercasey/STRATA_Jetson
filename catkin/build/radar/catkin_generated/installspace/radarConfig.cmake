@@ -67,14 +67,14 @@ set(radar_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(radar_SOURCE_PREFIX /home/strata/git/STRATA_Jetson/catkin/src/radar)
-  set(radar_DEVEL_PREFIX /home/strata/git/STRATA_Jetson/catkin/devel)
+  set(radar_SOURCE_PREFIX /home/strata/git/RADAR/STRATA_Jetson/catkin/src/radar)
+  set(radar_DEVEL_PREFIX /home/strata/git/RADAR/STRATA_Jetson/catkin/build/devel)
   set(radar_INSTALL_PREFIX "")
   set(radar_PREFIX ${radar_DEVEL_PREFIX})
 else()
   set(radar_SOURCE_PREFIX "")
   set(radar_DEVEL_PREFIX "")
-  set(radar_INSTALL_PREFIX /home/strata/git/STRATA_Jetson/catkin/install)
+  set(radar_INSTALL_PREFIX /usr/local)
   set(radar_PREFIX ${radar_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/strata/git/STRATA_Jetson/catkin/install/lib;/opt/ros/melodic/lib)
+    foreach(path /usr/local/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

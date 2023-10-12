@@ -1,8 +1,8 @@
-# Install script for directory: /home/strata/git/STRATA_Jetson/catkin/src/radar
+# Install script for directory: /home/strata/git/RADAR/STRATA_Jetson/catkin/src/radar
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/strata/git/STRATA_Jetson/catkin/install")
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,25 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/strata/git/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radar.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/strata/git/RADAR/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radar.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/radar/cmake" TYPE FILE FILES
-    "/home/strata/git/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radarConfig.cmake"
-    "/home/strata/git/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radarConfig-version.cmake"
+    "/home/strata/git/RADAR/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radarConfig.cmake"
+    "/home/strata/git/RADAR/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radarConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/radar" TYPE FILE FILES "/home/strata/git/STRATA_Jetson/catkin/src/radar/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/radar" TYPE FILE FILES "/home/strata/git/RADAR/STRATA_Jetson/catkin/src/radar/package.xml")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  include("/home/strata/git/RADAR/STRATA_Jetson/catkin/build/radar/catkin_generated/safe_execute_install.cmake")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/radar" TYPE PROGRAM FILES "/home/strata/git/RADAR/STRATA_Jetson/catkin/build/radar/catkin_generated/installspace/radar.py")
 endif()
 

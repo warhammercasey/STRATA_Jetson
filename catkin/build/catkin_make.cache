@@ -1,2 +1,2 @@
 radar
--DCATKIN_DEVEL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/strata/git/RADAR/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/RADAR/STRATA_Jetson/catkin/install -G Unix Makefiles

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/strata/git/STRATA_Jetson/catkin/src
+CMAKE_SOURCE_DIR = /home/strata/git/RADAR/STRATA_Jetson/catkin/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/strata/git/STRATA_Jetson/catkin/build
+CMAKE_BINARY_DIR = /home/strata/git/RADAR/STRATA_Jetson/catkin/build
 
 # Utility rule file for tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/strata/git/STRATA_Jetson/catkin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/strata/git/STRATA_Jetson/catkin/src /home/strata/git/STRATA_Jetson/catkin/src /home/strata/git/STRATA_Jetson/catkin/build /home/strata/git/STRATA_Jetson/catkin/build /home/strata/git/STRATA_Jetson/catkin/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/strata/git/RADAR/STRATA_Jetson/catkin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/strata/git/RADAR/STRATA_Jetson/catkin/src /home/strata/git/RADAR/STRATA_Jetson/catkin/src /home/strata/git/RADAR/STRATA_Jetson/catkin/build /home/strata/git/RADAR/STRATA_Jetson/catkin/build /home/strata/git/RADAR/STRATA_Jetson/catkin/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 
