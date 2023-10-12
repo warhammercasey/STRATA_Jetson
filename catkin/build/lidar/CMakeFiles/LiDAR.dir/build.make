@@ -81,14 +81,92 @@ lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o.provides: lidar/CMakeFiles/LiDAR.dir/
 lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o.provides.build: lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o
 
 
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o: lidar/CMakeFiles/LiDAR.dir/flags.make
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/ObjectDetection/ObjectDetection.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o -c /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/ObjectDetection/ObjectDetection.cpp
+
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.i"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/ObjectDetection/ObjectDetection.cpp > CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.i
+
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.s"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/ObjectDetection/ObjectDetection.cpp -o CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.s
+
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.requires:
+
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.requires
+
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.provides: lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.requires
+	$(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.provides.build
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.provides
+
+lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.provides.build: lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o
+
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o: lidar/CMakeFiles/LiDAR.dir/flags.make
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/Visualize/Visualize.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o -c /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/Visualize/Visualize.cpp
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.i"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/Visualize/Visualize.cpp > CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.i
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.s"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/Visualize/Visualize.cpp -o CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.s
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.requires:
+
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.requires
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.provides: lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.requires
+	$(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.provides.build
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.provides
+
+lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.provides.build: lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o
+
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o: lidar/CMakeFiles/LiDAR.dir/flags.make
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o: /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/DownsampleAndFilter/DownsampleAndFilter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o -c /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/DownsampleAndFilter/DownsampleAndFilter.cpp
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.i"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/DownsampleAndFilter/DownsampleAndFilter.cpp > CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.i
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.s"
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/strata/git/IMU/STRATA_Jetson/catkin/src/lidar/src/DownsampleAndFilter/DownsampleAndFilter.cpp -o CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.s
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.requires:
+
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.requires
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.provides: lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.requires
+	$(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.provides.build
+.PHONY : lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.provides
+
+lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.provides.build: lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o
+
+
 # Object files for target LiDAR
 LiDAR_OBJECTS = \
-"CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o"
+"CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o" \
+"CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o" \
+"CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o" \
+"CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o"
 
 # External object files for target LiDAR
 LiDAR_EXTERNAL_OBJECTS =
 
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o
+/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o
+/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o
+/home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/build.make
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: /opt/ros/melodic/lib/libimage_transport.so
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: /opt/ros/melodic/lib/libpcl_ros_filter.so
@@ -749,7 +827,7 @@ LiDAR_EXTERNAL_OBJECTS =
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: /usr/lib/aarch64-linux-gnu/libvtksys-6.3.so.6.3.0
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-6.3.so.6.3.0
 /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR: lidar/CMakeFiles/LiDAR.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/strata/git/IMU/STRATA_Jetson/catkin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable /home/strata/git/IMU/STRATA_Jetson/catkin/devel/lib/lidar/LiDAR"
 	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build/lidar && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LiDAR.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -758,6 +836,9 @@ lidar/CMakeFiles/LiDAR.dir/build: /home/strata/git/IMU/STRATA_Jetson/catkin/deve
 .PHONY : lidar/CMakeFiles/LiDAR.dir/build
 
 lidar/CMakeFiles/LiDAR.dir/requires: lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.o.requires
+lidar/CMakeFiles/LiDAR.dir/requires: lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o.requires
+lidar/CMakeFiles/LiDAR.dir/requires: lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o.requires
+lidar/CMakeFiles/LiDAR.dir/requires: lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o.requires
 
 .PHONY : lidar/CMakeFiles/LiDAR.dir/requires
 

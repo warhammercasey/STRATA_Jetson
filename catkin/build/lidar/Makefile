@@ -1517,6 +1517,33 @@ tf2_msgs_generate_messages_nodejs/fast:
 	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build.make lidar/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build
 .PHONY : tf2_msgs_generate_messages_nodejs/fast
 
+src/DownsampleAndFilter/DownsampleAndFilter.o: src/DownsampleAndFilter/DownsampleAndFilter.cpp.o
+
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.o
+
+# target to build an object file
+src/DownsampleAndFilter/DownsampleAndFilter.cpp.o:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.o
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.cpp.o
+
+src/DownsampleAndFilter/DownsampleAndFilter.i: src/DownsampleAndFilter/DownsampleAndFilter.cpp.i
+
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.i
+
+# target to preprocess a source file
+src/DownsampleAndFilter/DownsampleAndFilter.cpp.i:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.i
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.cpp.i
+
+src/DownsampleAndFilter/DownsampleAndFilter.s: src/DownsampleAndFilter/DownsampleAndFilter.cpp.s
+
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.s
+
+# target to generate assembly for a file
+src/DownsampleAndFilter/DownsampleAndFilter.cpp.s:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/DownsampleAndFilter/DownsampleAndFilter.cpp.s
+.PHONY : src/DownsampleAndFilter/DownsampleAndFilter.cpp.s
+
 src/LiDAR.o: src/LiDAR.cpp.o
 
 .PHONY : src/LiDAR.o
@@ -1543,6 +1570,60 @@ src/LiDAR.s: src/LiDAR.cpp.s
 src/LiDAR.cpp.s:
 	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/LiDAR.cpp.s
 .PHONY : src/LiDAR.cpp.s
+
+src/ObjectDetection/ObjectDetection.o: src/ObjectDetection/ObjectDetection.cpp.o
+
+.PHONY : src/ObjectDetection/ObjectDetection.o
+
+# target to build an object file
+src/ObjectDetection/ObjectDetection.cpp.o:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.o
+.PHONY : src/ObjectDetection/ObjectDetection.cpp.o
+
+src/ObjectDetection/ObjectDetection.i: src/ObjectDetection/ObjectDetection.cpp.i
+
+.PHONY : src/ObjectDetection/ObjectDetection.i
+
+# target to preprocess a source file
+src/ObjectDetection/ObjectDetection.cpp.i:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.i
+.PHONY : src/ObjectDetection/ObjectDetection.cpp.i
+
+src/ObjectDetection/ObjectDetection.s: src/ObjectDetection/ObjectDetection.cpp.s
+
+.PHONY : src/ObjectDetection/ObjectDetection.s
+
+# target to generate assembly for a file
+src/ObjectDetection/ObjectDetection.cpp.s:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/ObjectDetection/ObjectDetection.cpp.s
+.PHONY : src/ObjectDetection/ObjectDetection.cpp.s
+
+src/Visualize/Visualize.o: src/Visualize/Visualize.cpp.o
+
+.PHONY : src/Visualize/Visualize.o
+
+# target to build an object file
+src/Visualize/Visualize.cpp.o:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.o
+.PHONY : src/Visualize/Visualize.cpp.o
+
+src/Visualize/Visualize.i: src/Visualize/Visualize.cpp.i
+
+.PHONY : src/Visualize/Visualize.i
+
+# target to preprocess a source file
+src/Visualize/Visualize.cpp.i:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.i
+.PHONY : src/Visualize/Visualize.cpp.i
+
+src/Visualize/Visualize.s: src/Visualize/Visualize.cpp.s
+
+.PHONY : src/Visualize/Visualize.s
+
+# target to generate assembly for a file
+src/Visualize/Visualize.cpp.s:
+	cd /home/strata/git/IMU/STRATA_Jetson/catkin/build && $(MAKE) -f lidar/CMakeFiles/LiDAR.dir/build.make lidar/CMakeFiles/LiDAR.dir/src/Visualize/Visualize.cpp.s
+.PHONY : src/Visualize/Visualize.cpp.s
 
 # Help Target
 help:
@@ -1647,9 +1728,18 @@ help:
 	@echo "... actionlib_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_nodejs"
+	@echo "... src/DownsampleAndFilter/DownsampleAndFilter.o"
+	@echo "... src/DownsampleAndFilter/DownsampleAndFilter.i"
+	@echo "... src/DownsampleAndFilter/DownsampleAndFilter.s"
 	@echo "... src/LiDAR.o"
 	@echo "... src/LiDAR.i"
 	@echo "... src/LiDAR.s"
+	@echo "... src/ObjectDetection/ObjectDetection.o"
+	@echo "... src/ObjectDetection/ObjectDetection.i"
+	@echo "... src/ObjectDetection/ObjectDetection.s"
+	@echo "... src/Visualize/Visualize.o"
+	@echo "... src/Visualize/Visualize.i"
+	@echo "... src/Visualize/Visualize.s"
 .PHONY : help
 
 

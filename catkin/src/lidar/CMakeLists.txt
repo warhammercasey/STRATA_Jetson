@@ -220,5 +220,7 @@ link_directories(
 
 find_package(PCL REQUIRED)
 include_directories(include${PCL_INCLUDE_DIRS})
-add_executable(LiDAR src/LiDAR.cpp)
+add_executable(LiDAR src/LiDAR.cpp src/ObjectDetection/ObjectDetection.cpp 
+src/Visualize/Visualize.cpp src/DownsampleAndFilter/DownsampleAndFilter.cpp)
+
 target_link_libraries(LiDAR ${catkin_LIBRARIES} ${PCL_LIBRARIES} libHPS3DSDK.so)
