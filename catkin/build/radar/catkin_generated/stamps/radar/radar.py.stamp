@@ -1,7 +1,7 @@
 #!/usr/bin/env python
+import sys
 import rospy
 import time
-import radar.radariq
 from radariq import RadarIQ, MODE_POINT_CLOUD, RESET_REBOOT, DENSITY_VERY_DENSE, DENSITY_NORMAL 
  
 
@@ -10,7 +10,9 @@ from radariq import RadarIQ, MODE_POINT_CLOUD, RESET_REBOOT, DENSITY_VERY_DENSE,
 # 
 
 def point_cloud():
+    rospy.init_node('Radar')
     print("Point Cloud")
+    rate = rospy.Rate(10)
     try:
         riq = RadarIQ()
         riq.set_mode(MODE_POINT_CLOUD)
@@ -28,16 +30,20 @@ def point_cloud():
         frame = []
         # Continuously reads and outputs point cloud data
         for row in riq.get_data():
+            if rospy.is_shutdown():
+                break
             if frame is not None:
                 print(row)
             else:
                 print("None\n")
+            
+        riq.stop()
     except Exception as error:
         print(error)
 #print(frame)
 #print(len(frame))
 #print(len(frame[0]))
-    riq.stop()
+        
     exit()
     print("Stopped")
 if __name__ == '__main__':
