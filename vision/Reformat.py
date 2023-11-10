@@ -8,11 +8,41 @@ MORPH_KERNEL_SIZE = 10 # Kernel size for morphological opening
 MAX_MORPH_ITERATIONS = 10
 WHITE_THRESHOLD = 5
 
+# Camera information
+FOV = 54
+H_RESOLUTION = 640
+V_RESOLUTION = 480
+
+# Directory of images
 WORKING_DIR = "C:\\Users\\mmurr\\Documents\\School\\Senior Design\\Computer Vision"
 
 os.chdir(WORKING_DIR)
 
 
+# 3D points of LEDs
+target_points = np.array([
+    (18.98, 3.36, -1),
+    (48.76, 14.17, -1),
+    (40.36, 28.76, -1),
+    (33.61, 44.68, -1)
+], dtype="float64")
+
+
+# Make camera calibration matrix
+f = H_RESOLUTION/2/np.arctan(FOV*np.pi/180/2)
+
+calibration_matrix = np.array([
+    (f, 0, H_RESOLUTION/2),
+    (0, f, V_RESOLUTION/2),
+    (0, 0, 1)
+])
+
+
+# Gets the camera coordinates of all detected LEDs
+# img - filename of input image
+# target_length - the amount of LEDs to try to detect
+# kernel_size - the size of the kernel used for morphological opening
+# morph_iterations - the amount of times to do a morphological opening
 def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterations = 1):
     # Read image
     Ibgr = cv2.imread(img)
@@ -48,6 +78,7 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
     # Figure out which blobs are circular
     circular = [abs(((stats[i, cv2.CC_STAT_HEIGHT] + stats[i, cv2.CC_STAT_WIDTH])/4)**2*np.pi/stats[i, cv2.CC_STAT_AREA] - 1) <= CIRCLE_THRESHOLD for i in range(num_labels)]
 
+    # Increase thershold until enough circular blobs are detected
     thresh = CIRCLE_THRESHOLD
     while sum(circular) < target_length:
         thresh += 0.01
@@ -56,6 +87,7 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
         circular = [abs(((stats[i, cv2.CC_STAT_HEIGHT] + stats[i, cv2.CC_STAT_WIDTH])/4)**2*np.pi/stats[i, cv2.CC_STAT_AREA] - 1) <= thresh for i in range(num_labels)]
 
     
+    # Get rid of any non-white blobs
     white = circular[:]
     for i in range(len(circular)):
         if not circular[i]:
@@ -66,7 +98,7 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
         
         white[i] = np.max(np.abs(np.array([avg, avg, avg]) - Ibgr[pos[1]][pos[0]])) <= WHITE_THRESHOLD
     
-    
+    # Increase white threshold until we have enough blobs detected
     thresh = WHITE_THRESHOLD
     while sum(white) < target_length:
         thresh += 1
@@ -92,47 +124,21 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
         
         Ibgr = cv2.circle(Ibgr, (int(round(centroids[i][0])), int(round(centroids[i][1]))), radius=5, color=(0,0,255), thickness=-1)
 
+    # Show images
     cv2.imshow("Base Image", Ibgr)
     cv2.imshow("Binary Image", im_bw)
     cv2.waitKey(0)
     
     return centroids[circular]
 
-IMG = 'img6.jpg'
+IMG = 'img4.jpg'
 
-target_points = get_points('img0.jpg', 4)  
-seen_points = get_points(IMG, 4)
+#target_points = get_points('img0.jpg', len(target_points)) 
+seen_points = get_points(IMG, len(target_points)).astype('float64')
+#seen_points = np.array(seen_points, dtype='double')
 
-N = len(target_points)
+success, rotation_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=0)
 
-A = np.zeros((2*N, 4))
-
-for i in range(N):
-    A[2*i]     = [target_points[i][0], -target_points[i][1], 1, 0]
-    A[2*i + 1] = [target_points[i][1],  target_points[i][0], 0, 1]
-    
-permutations = list(itertools.permutations(seen_points, len(target_points)))
-best_mag = 0
-best_M = 0
-
-for i in range(len(permutations)):
-    M = cv2.getPerspectiveTransform(np.array([target_points], np.float32), np.array([permutations[i]], np.float32))
-    #print(M)
-    
-    #mag = abs(np.arccos(M[0][0]) + np.arcsin(M[1][0]))/2
-    mag = np.sqrt(M[0][2]**2 + M[1][2]**2)
-    
-    if best_mag == 0:
-        best_M = M
-    
-    if (best_mag == 0 or mag < best_mag) and M[0][0] >= 0 and M[1][1] >= 0:
-        best_M = M
-        best_mag = mag
-
-I = cv2.imread(IMG)
-
-warped = cv2.warpPerspective(I, best_M, (len(I), len(I[0])))
-
-cv2.imshow("Original", I)
-cv2.imshow("warped", warped)
-cv2.waitKey(0)
+print("Success: " + str(success))
+print("rotation_vector: " + str(rotation_vector))
+print("translation_vector: " + str(translation_vector))
