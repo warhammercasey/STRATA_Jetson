@@ -39,13 +39,12 @@ calibration_matrix = np.array([
 
 
 # Gets the camera coordinates of all detected LEDs
-# img - filename of input image
+# img - bgr input image
 # target_length - the amount of LEDs to try to detect
 # kernel_size - the size of the kernel used for morphological opening
 # morph_iterations - the amount of times to do a morphological opening
-def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterations = 1):
+def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterations = 1):
     # Read image
-    Ibgr = cv2.imread(img)
     I = cv2.cvtColor(Ibgr, cv2.COLOR_BGR2GRAY)
 
     # Threshold image
@@ -69,7 +68,7 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
     if num_labels < target_length:
         if kernel_size == 0:
             return []
-        return get_points(img, target_length, kernel_size = kernel_size - 1, morph_iterations = morph_iterations)
+        return get_points(Ibgr, target_length, kernel_size = kernel_size - 1, morph_iterations = morph_iterations)
     '''elif num_labels > target_length + 1:
         if morph_iterations >= MAX_MORPH_ITERATIONS:
             return []
@@ -134,7 +133,7 @@ def get_points(img, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_iterat
 IMG = 'img4.jpg'
 
 #target_points = get_points('img0.jpg', len(target_points)) 
-seen_points = get_points(IMG, len(target_points)).astype('float64')
+seen_points = get_points(cv2.imread(IMG), len(target_points)).astype('float64')
 #seen_points = np.array(seen_points, dtype='double')
 
 success, rotation_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=0)
