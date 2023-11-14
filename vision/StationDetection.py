@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from scipy.spatial.transform import Rotation as R
 
 CIRCLE_THRESHOLD = 0.01 # How tolerant of things being circles. Higher values will detect more objects as circular
 MORPH_KERNEL_SIZE = 10 # Kernel size for morphological opening
@@ -197,8 +198,9 @@ if video_capture.isOpened():
             
             for i in range(len(seen_points)):
                 frame = cv2.circle(frame, (int(np.round(seen_points[i][0])), int(np.round(seen_points[i][1]))), 5, (0, 0, 255), -1)
+               
+                frame = cv2.putText(frame, str(i), seen_points[i], cv2.FONT_HERSHY_SIMPLEX, 1, (0, 0, 0), 1, 2)
                 
-            out.write(frame)
             
             if len(seen_points) != len(target_points):
                 print("Failed")
@@ -210,6 +212,12 @@ if video_capture.isOpened():
             
             success1, rotation_vector1, translation_vector1 = cv2.solvePnP(target_rotated_1, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
             success2, rotation_vector2, translation_vector2 = cv2.solvePnP(target_rotated_2, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
+            
+            rotation_matrix1 = cv2.Rodrigues(rotation_vector1)
+            rotation_matrix2 = cv2.Rodrigues(rotation_vector2)
+            
+            rotation_vector1 = R.from_matrix(rotation_matrix1).as_rotvec()
+            rotation_vector2 = R.from_matrix(rotation_matrix2).as_rotvec()
             
             for i in rotation_vector1:
                 i *= 180/np.pi
@@ -227,6 +235,9 @@ if video_capture.isOpened():
                 print("Rotation_vector2: " + str(rotation_vector2) + "\ttranslation_vector2: " + str(translation_vector2))
             else:
                 print("Failed2")
+                
+                
+            out.write(frame)
     finally:
         video_capture.release()
         out.release()
