@@ -1,5 +1,4 @@
 import cv2
-import os
 import numpy as np
 import itertools
 
@@ -9,34 +8,28 @@ MAX_MORPH_ITERATIONS = 10
 WHITE_THRESHOLD = 5
 
 # Camera information
-FOV = 54
-H_RESOLUTION = 640
-V_RESOLUTION = 480
-
-# Directory of images
-WORKING_DIR = "C:\\Users\\mmurr\\Documents\\School\\Senior Design\\Computer Vision"
-
-os.chdir(WORKING_DIR)
-
+FOV = 62.2
+H_RESOLUTION = 1296
+V_RESOLUTION = 972
 
 # 3D points of LEDs
-target_points = np.array([
-    (18.98, 3.36, 0),
-    (48.76, 14.17, 0),
-    (40.36, 28.76, 0),
-    (33.61, 44.68, 0)
-], dtype="float64")
-
 #target_points = np.array([
-#    (0, 100, 0),
-#    (100, 100, 0),
-#    (50, 90, 0),
-#    (75, 75, 0),
-#    (90, 50, 0),
-#    (50, 10, 0),
-#    (0, 0, 0),
-#    (100, 0, 0)
-#], dtype='float64')
+#    (18.98, 3.36, 0),
+#    (48.76, 14.17, 0),
+#    (40.36, 28.76, 0),
+#    (33.61, 44.68, 0)
+#], dtype="float64")
+
+target_points = np.array([
+    (0, 100, 0),
+    (100, 100, 0),
+    (50, 90, 0),
+    (75, 75, 0),
+    (90, 50, 0),
+    (50, 10, 0),
+    (0, 0, 0),
+    (100, 0, 0)
+], dtype='float64')
 
 
 # Make camera calibration matrix
@@ -47,6 +40,33 @@ calibration_matrix = np.array([
     (0, f, V_RESOLUTION/2),
     (0, 0, 1)
 ])
+
+def gstreamer_pipeline(
+    sensor_id=0,
+    capture_width=H_RESOLUTION,
+    capture_height=V_RESOLUTION,
+    display_width=H_RESOLUTION,
+    display_height=V_RESOLUTION,
+    framerate=30,
+    flip_method=0,
+):
+    return (
+        "nvarguscamerasrc sensor-id=%d ! "
+        "video/x-raw(memory:NVMM), width=(int)%d, height=(int)%d, framerate=(fraction)%d/1 ! "
+        "nvvidconv flip-method=%d ! "
+        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
+        "videoconvert ! "
+        "video/x-raw, format=(string)BGR ! appsink"
+        % (
+            sensor_id,
+            capture_width,
+            capture_height,
+            framerate,
+            flip_method,
+            display_width,
+            display_height,
+        )
+    )
 
 
 # Gets the camera coordinates of all detected LEDs
@@ -141,27 +161,23 @@ def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_itera
     
     return centroids[circular]
 
-IMG = 'img5.jpg'
 
-seen_points = get_points(cv2.imread(IMG), len(target_points)).astype('float64')
-  
-        
-success, best_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=0)
+video_capture = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
-
-print("rotation_vector: " + str(best_vector[0]))
-print("translation_vector: " + str(best_vector[1]))
-
-I = cv2.imread(IMG)
-
-r = 5
-
-points = seen_points.astype('int')
-for i in range(len(points)):
-    I = cv2.circle(I, points[i], radius=r, color=(0,0,255), thickness=-1)
-    
-    I = cv2.putText(I, str(i), points[i], cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 1, 2)
-    
-cv2.imshow("Numbered", I)
-
-cv2.waitKey(0)
+if video_capture.isOpened():
+    try:
+        while True:
+            ret_val, frame = video_capture.read()
+            
+            seen_points = get_points(frame, len(target_points)).astype('float64')
+            
+            success, rotation_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=0)
+            
+            if success:
+                print("Rotation_vector: " + str(rotation_vector) + "\ttranslation_vector: " + str(translation_vector))
+            else:
+                print("Failed")
+    finally:
+        video_capture.release()
+else:
+    print("Unable to open camera")
