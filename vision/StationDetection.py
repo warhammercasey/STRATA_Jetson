@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import itertools
 
 CIRCLE_THRESHOLD = 0.01 # How tolerant of things being circles. Higher values will detect more objects as circular
 MORPH_KERNEL_SIZE = 10 # Kernel size for morphological opening
@@ -12,6 +11,8 @@ FOV = 62.2
 H_RESOLUTION = 1296
 V_RESOLUTION = 972
 
+SHITTY_ROTATION = 5*np.pi/180 # degrees
+
 # 3D points of LEDs
 #target_points = np.array([
 #    (18.98, 3.36, 0),
@@ -21,15 +22,36 @@ V_RESOLUTION = 972
 #], dtype="float64")
 
 target_points = np.array([
-    (0, 100, 0),
-    (100, 100, 0),
-    (50, 90, 0),
-    (75, 75, 0),
-    (90, 50, 0),
-    (50, 10, 0),
     (0, 0, 0),
-    (100, 0, 0)
-], dtype='float64')
+    (100, 0, 0),
+    (50, 10, 0),
+    (75, 25, 0),
+    (90, 50, 0),
+    (50, 90, 0),
+    (0, 100, 0),
+    (100, 100, 0)
+], dtype='float32')
+
+rotation_matrix = np.array([
+    [np.cos(SHITTY_ROTATION), -np.sin(SHITTY_ROTATION), 0],
+    [np.sin(SHITTY_ROTATION),  np.cos(SHITTY_ROTATION), 0],
+    [0, 0, 1]
+])
+
+target_rotated_1 = np.transpose(np.matmul(rotation_matrix, np.transpose(target_points)))
+target_rotated_1 = target_rotated_1[np.lexsort((target_rotated_1[:, 0], target_rotated_1[:, 1]))]
+
+rotation_matrix = np.array([
+    [np.cos(-SHITTY_ROTATION), -np.sin(-SHITTY_ROTATION), 0],
+    [np.sin(-SHITTY_ROTATION),  np.cos(-SHITTY_ROTATION), 0],
+    [0, 0, 1]
+])
+
+
+target_rotated_2 = np.transpose(np.matmul(rotation_matrix, np.transpose(target_points)))
+target_rotated_2 = target_rotated_2[np.lexsort((target_rotated_2[:, 0], target_rotated_2[:, 1]))]
+
+#print(target_rotated_1)
 
 
 # Make camera calibration matrix
@@ -164,20 +186,49 @@ def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_itera
 
 video_capture = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
+out = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*"MJPG"), 30, (H_RESOLUTION, V_RESOLUTION))
+
 if video_capture.isOpened():
     try:
         while True:
             ret_val, frame = video_capture.read()
             
-            seen_points = get_points(frame, len(target_points)).astype('float64')
+            seen_points = get_points(frame, len(target_points))
             
-            success, rotation_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=0)
+            for i in range(len(seen_points)):
+                frame = cv2.circle(frame, (int(np.round(seen_points[i][0])), int(np.round(seen_points[i][1]))), 5, (0, 0, 255), -1)
+                
+            out.write(frame)
             
-            if success:
-                print("Rotation_vector: " + str(rotation_vector) + "\ttranslation_vector: " + str(translation_vector))
-            else:
+            if len(seen_points) != len(target_points):
                 print("Failed")
+                continue
+            
+            seen_points = np.array(seen_points, dtype='float32')
+            seen_points = seen_points[np.lexsort((seen_points[:,0], seen_points[:,1]))]
+            
+            
+            success1, rotation_vector1, translation_vector1 = cv2.solvePnP(target_rotated_1, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
+            success2, rotation_vector2, translation_vector2 = cv2.solvePnP(target_rotated_2, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
+            
+            for i in rotation_vector1:
+                i *= 180/np.pi
+                
+            for i in rotation_vector2:
+                i *= 180/np.pi
+            
+            if success1:
+                print("Rotation_vector1: " + str(rotation_vector1) + "\ttranslation_vector1: " + str(translation_vector1))
+            else:
+                print("Failed1")
+                
+            
+            if success2:
+                print("Rotation_vector2: " + str(rotation_vector2) + "\ttranslation_vector2: " + str(translation_vector2))
+            else:
+                print("Failed2")
     finally:
         video_capture.release()
+        out.release()
 else:
     print("Unable to open camera")
