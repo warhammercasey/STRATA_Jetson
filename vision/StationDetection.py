@@ -184,7 +184,6 @@ def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_itera
     
     return centroids[circular]
 
-
 video_capture = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
 out = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*"MJPG"), 30, (H_RESOLUTION, V_RESOLUTION))
@@ -199,7 +198,7 @@ if video_capture.isOpened():
             for i in range(len(seen_points)):
                 frame = cv2.circle(frame, (int(np.round(seen_points[i][0])), int(np.round(seen_points[i][1]))), 5, (0, 0, 255), -1)
                
-                frame = cv2.putText(frame, str(i), seen_points[i], cv2.FONT_HERSHY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+                frame = cv2.putText(frame, str(i), (int(seen_points[i][0]), int(seen_points[i][1])), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
                 
             
             if len(seen_points) != len(target_points):
@@ -213,8 +212,11 @@ if video_capture.isOpened():
             success1, rotation_vector1, translation_vector1 = cv2.solvePnP(target_rotated_1, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
             success2, rotation_vector2, translation_vector2 = cv2.solvePnP(target_rotated_2, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
             
-            rotation_matrix1 = cv2.Rodrigues(rotation_vector1)
-            rotation_matrix2 = cv2.Rodrigues(rotation_vector2)
+            rotation = (np.mean([i[0] for i in seen_points]) - H_RESOLUTION/2)/H_RESOLUTION*FOV
+            
+            rotation_matrix1 = cv2.Rodrigues(rotation_vector1)[0]
+            rotation_matrix2 = cv2.Rodrigues(rotation_vector2)[0]
+            
             
             rotation_vector1 = R.from_matrix(rotation_matrix1).as_rotvec()
             rotation_vector2 = R.from_matrix(rotation_matrix2).as_rotvec()
@@ -225,17 +227,15 @@ if video_capture.isOpened():
             for i in rotation_vector2:
                 i *= 180/np.pi
             
-            if success1:
-                print("Rotation_vector1: " + str(rotation_vector1) + "\ttranslation_vector1: " + str(translation_vector1))
-            else:
-                print("Failed1")
+            print((np.mean([i[0] for i in seen_points]) - H_RESOLUTION/2)/H_RESOLUTION*FOV)
                 
             
-            if success2:
-                print("Rotation_vector2: " + str(rotation_vector2) + "\ttranslation_vector2: " + str(translation_vector2))
-            else:
-                print("Failed2")
-                
+            frame = cv2.putText(frame, "Distance 1: " + str(translation_vector1[2]) + " Distance 2: " + str(translation_vector2[2]), (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+            
+            frame = cv2.putText(frame, "Rotation: " + str(rotation), (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+            
+            if (not success1) and (not success2):
+                frame = cv2.putText(frame, "FAILED", (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1, 2)
                 
             out.write(frame)
     finally:
