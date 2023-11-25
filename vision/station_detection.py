@@ -4,6 +4,7 @@
 
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
 import copy
 
 images = []
@@ -80,7 +81,7 @@ left_station = cv2.imread('./vision/stationTemplates/leftSideStation.jpg')
 right_station = cv2.imread('./vision/stationTemplates/rightSideStation.jpg')
 templates = [behind_station, front_station, left_front_station, left_station, right_station]
 
-
+best_matches = []
 for img2 in templates:
     img1 = images[0]
 
@@ -91,6 +92,30 @@ for img2 in templates:
     matches = bf.match(des1,des2)
     # Sort them in the order of their distance.
     matches = sorted(matches, key = lambda x:x.distance)
+    best_matches.append(matches)
     # Draw first 10 matches.
     img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10],None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
     plt.imshow(img3),plt.show()
+
+smallest = 100e6
+index = -1
+# compare which template has the best match
+for i in range(0,len(best_matches)):
+    matches = best_matches[i]
+    matches = matches[:10] # Cut off all the matches except for the best 10
+    avg=0
+    for j in matches:
+        avg += j.distance
+    avg = avg / len(matches)
+    print("avg:")
+    print(avg)
+    print("Distance:")
+    print(matches[0].distance)
+    dist = matches[0].distance
+    if dist < smallest:
+        smallest = dist
+        index = i
+
+print("Best Match:")
+print(index)
+# print(matches[:10])
