@@ -81,6 +81,9 @@ left_station = cv2.imread('./vision/stationTemplates/leftSideStation.jpg')
 right_station = cv2.imread('./vision/stationTemplates/rightSideStation.jpg')
 templates = [behind_station, front_station, left_front_station, left_station, right_station]
 
+# 
+# TESTING BRUTE FORCE MATCHING
+# 
 best_matches = []
 for img2 in templates:
     img1 = images[0]
@@ -95,7 +98,8 @@ for img2 in templates:
     best_matches.append(matches)
     # Draw first 10 matches.
     img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10],None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-    plt.imshow(img3),plt.show()
+    
+    # plt.imshow(img3),plt.show()
 
 smallest = 100e6
 index = -1
@@ -119,3 +123,28 @@ for i in range(0,len(best_matches)):
 print("Best Match:")
 print(index)
 # print(matches[:10])
+
+# 
+# TESTING CROSS CORRELATING MATCHING
+# 
+
+img = images[0]
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+for template in templates:
+    template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+    w, h = template.shape[::-1]
+
+    res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+    top_left = max_loc
+    bottom_right = (top_left[0] + w, top_left[1] + h)
+    color = (255,0,0)
+    cv2.rectangle(img,top_left, bottom_right, color, 3)
+    
+    plt.subplot(121),plt.imshow(res,cmap = 'gray')
+    plt.title('Matching Result'), plt.xticks([]), plt.yticks([])
+    plt.subplot(122),plt.imshow(img,cmap = 'gray')
+    plt.title('Detected Point'), plt.xticks([]), plt.yticks([])
+    plt.suptitle("i love meth")
+    plt.show()
