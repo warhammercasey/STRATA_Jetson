@@ -1,2 +1,2 @@
-wheel_controller
--DCATKIN_DEVEL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/STRATA_Jetson/catkin/install -G Unix Makefiles
+station_detection
+-DCATKIN_DEVEL_PREFIX=/home/strata/git/vision/STRATA_Jetson/catkin/devel -DCMAKE_INSTALL_PREFIX=/home/strata/git/vision/STRATA_Jetson/catkin/install -G Unix Makefiles

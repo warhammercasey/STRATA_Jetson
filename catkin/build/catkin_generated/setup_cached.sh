@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/strata/git/STRATA_Jetson/catkin/build'
+export PWD='/home/strata/git/vision/STRATA_Jetson/catkin/build'

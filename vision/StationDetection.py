@@ -38,7 +38,7 @@ SPEED_KD = 0.1
 APPROACH_DISTANCE = 100 # If we lose track of the station below this distance, start final guidance
 APPROACH_SPEED = 20 # Speed to approach the station at in final guidance
 
-STATION_PIN = 4 # GPIO pin of jetson which the receiver of the station is connected to. This pin should go high when charging
+STATION_PIN = 21 # GPIO pin of jetson which the receiver of the station is connected to. This pin should go high when charging
 
 WHEEL_DIAMETER = 90 # mm
 

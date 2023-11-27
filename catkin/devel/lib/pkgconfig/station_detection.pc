@@ -1,0 +1,8 @@
+prefix=/home/strata/git/vision/STRATA_Jetson/catkin/devel
+
+Name: station_detection
+Description: Description of station_detection
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
