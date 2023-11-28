@@ -395,6 +395,10 @@ if __name__ == "__main__":
                         data_to_send = Bool()
                         data_to_send.data = detected
                         detected_pub.publish(data_to_send)
+                    else:
+                        if SAVE_VIDEO:
+                            out.write(frame)
+                        continue
 
                 # Update the last detection time and make sure final guidance is disabled
                 last_detection = time.time()
