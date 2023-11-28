@@ -16,6 +16,7 @@ const uint8_t servo_pins[] = {10, 11, 22, 23};
 const int32_t servo_offsets[] = {-1, 5, -2, 1}; // FrontRight, FrontLeft, BackLeft, BackRight
 const bool reverse_servo[] = {false, false, true, true};
 
+bool no_mpu = false;
 
 typedef struct{
   uint32_t timestamp;
@@ -70,10 +71,12 @@ void setup() {
   setting.accel_dlpf_cfg = ACCEL_DLPF_CFG::DLPF_99HZ;
 
   if (!mpu.setup(0x68, setting)) {  // change to your own address
-    while (1) {
+    //while (1) {
       Serial.println("MPU connection failed. Please check your connection with `connection_check` example.");
+      send_string("MPU connection failed");
       delay(5000);
-    }
+      no_mpu = true;
+    //}
   }
 
   motors[0].is_reversed(true);
@@ -100,7 +103,7 @@ void loop() {
   static std::vector<impulse_point_t> accel_vals;
   static bool in_impulse = false;
 
-  if(mpu.update()){
+  if(!no_mpu && mpu.update()){
     uint32_t current_time = micros();
 
     float accelX = mpu.getAccX();
@@ -175,7 +178,7 @@ void loop() {
 
 void send_string(const char* str){
   Serial5.write((uint8_t)SEND_STRING);
-  Serial5.printf("%s\n", str);
+  Serial5.printf(str);
 }
 
 void handle_cmd(){
@@ -208,7 +211,6 @@ void handle_cmd(){
       rx_buffer[cmd_index] = Serial5.read();
       if(cmd_index >= sizeof(int32_t)*4){
         Serial.println("Set wheel speed");
-        send_string("Set wheel speed");
         if(parse_cmd(cmd, rx_buffer)){
           Serial5.clear();
         }
@@ -222,7 +224,6 @@ void handle_cmd(){
       rx_buffer[cmd_index] = Serial5.read();
       if(cmd_index >= sizeof(int32_t)){
         Serial.println("Set turn angle");
-        send_string("Set turn angle");
         if(parse_cmd(cmd, rx_buffer)){
           Serial5.clear();
         }
@@ -261,8 +262,10 @@ bool parse_cmd(uint8_t cmd, uint8_t* data){
   switch(cmd){
   case SET_WHEEL_SPEED:
     for(uint8_t i = 0; i < 4; i++){
-      motors[i].set_target_speed(((int32_t*)data)[i]);
-      if(((int32_t*)data)[i] > 1000 || ((int32_t*)data)[i] < -1000) failed = true;
+      int32_t speed = ((int32_t*)data)[i] >> 8;
+      motors[i].set_target_speed(speed);
+      
+      if(speed > 1000 || speed < -1000) failed = true;
     }
     break;
 
@@ -283,6 +286,7 @@ bool parse_cmd(uint8_t cmd, uint8_t* data){
     }
 
     servo_angle = (servo_angle*90.0/MAX_SERVO_ANGLE) + 90;
+    //send_string("Set turn angle");
 
     for(uint8_t i = 0; i < sizeof(servo_pins)/sizeof(servo_pins[0]); i++){
       int32_t offset_angle = servo_angle + servo_offsets[i];
