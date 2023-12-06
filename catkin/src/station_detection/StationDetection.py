@@ -8,38 +8,40 @@ import RPi.GPIO as GPIO
 from scipy.spatial.transform import Rotation as R
 import copy
 
-MORPH_KERNEL_SIZE = 20 # Kernel size for morphological opening
+MORPH_KERNEL_SIZE = 6 # Kernel size for morphological opening
 
 CIRCLE_WEIGHT = 1.5
 WHITE_WEIGHT = 1
-DIST_WEIGHT = 0.5
-MIN_CONFIDENCE = (CIRCLE_WEIGHT + WHITE_WEIGHT + DIST_WEIGHT)*2/3
+DIST_WEIGHT = 2
+MIN_CONFIDENCE = 0.2#(CIRCLE_WEIGHT + WHITE_WEIGHT + DIST_WEIGHT)/2
 
-DETECTION_COUNT = 10
+DETECTION_COUNT = 6
 
 # Camera information
 FOV = 62.2
-H_RESOLUTION = 1296
-V_RESOLUTION = 972
+H_RESOLUTION = 640
+V_RESOLUTION = 480
 
-FRAMERATE = 30
+FRAMERATE = 20
 
-SHITTY_ROTATION = 5*np.pi/180 # degrees
+SHITTY_ROTATION = 1*np.pi/180 # degrees
 
 DETECTION_TIMEOUT = 0.5 # seconds
-AVG_FILTER_SIZE = 10
+AVG_FILTER_SIZE = 2
 
-TURNING_GAIN = 1 # The rotation to the station is multiplied by this to get the turn angle
+TURNING_GAIN = 2 # The rotation to the station is multiplied by this to get the turn angle
 
 # PID gains
 SPEED_KP = 0.05
 SPEED_KI = 0.005
-SPEED_KD = 0.005
+SPEED_KD = 0#0.005
+
+MAX_REPROJECTION_ERROR = 80
 
 # We will lose track of the station once we get too close
 # Once we get to that point we start final guidance where we just go straight until we reach the station or we have gone too far
 APPROACH_DISTANCE = 350 # If we lose track of the station below this distance, start final guidance
-APPROACH_SPEED = 20 # Speed to approach the station at in final guidance
+APPROACH_SPEED = 10 # Speed to approach the station at in final guidance
 
 STATION_PIN = 21 # GPIO pin of jetson which the receiver of the station is connected to. This pin should go high when charging
 
@@ -69,6 +71,8 @@ target_points = np.array([
     (0, 100, 0),
     (100, 100, 0)
 ], dtype='float32')
+
+target_points = target_points[np.lexsort((target_points[:, 0], target_points[:, 1]))]
 
 # So there was this big issue where I have no idea how to relate which detected LED coordinate in 2d pixel coordinates corresponds to which LED in 3d coordinates and thats needed for pose estimation.
 # When the LEDs are detected, they are in a likely random order so we dont know which one is which.
@@ -117,12 +121,12 @@ def gstreamer_pipeline(
     flip_method=0,
 ):
     return (
-        "nvarguscamerasrc sensor-id=%d ! "
+        "nvarguscamerasrc aelock=true exposuretimerange='10000 10000' sensor-id=%d ! "
         "video/x-raw(memory:NVMM), width=(int)%d, height=(int)%d, framerate=(fraction)%d/1 ! "
         "nvvidconv flip-method=%d ! "
         "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
         "videoconvert ! "
-        "video/x-raw, format=(string)BGR ! appsink"
+        "video/x-raw, format=(string)BGR ! appsink "
         % (
             sensor_id,
             capture_width,
@@ -166,7 +170,7 @@ def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_itera
     # Dynamically reduce kernel size if we dont detect enough dots
     if num_labels < target_length:
         if kernel_size == 0:
-            return ([], True)
+            return ([], True, [])
         return get_points(Ibgr, target_length, kernel_size = kernel_size - 1, morph_iterations = morph_iterations)
     
 
@@ -235,15 +239,18 @@ def get_points(Ibgr, target_length, kernel_size = MORPH_KERNEL_SIZE, morph_itera
 
 def position_callback(data):
     global position
-    position = data.data
-    for i in position:
-        i *= WHEEL_DIAMETER
+    position = np.array(data.data)
+    
+    for i in range(len(position)):
+        position[i] *= np.pi*WHEEL_DIAMETER
 
 if __name__ == "__main__":
+    rospy.loginfo("Starting camera")
     video_capture = cv2.VideoCapture(gstreamer_pipeline(flip_method=2), cv2.CAP_GSTREAMER)
+    rospy.loginfo("Camera started")
 
     if SAVE_VIDEO:
-        out = cv2.VideoWriter('/home/strata/output.avi', cv2.VideoWriter_fourcc(*"MJPG"), 30, (H_RESOLUTION, V_RESOLUTION))
+        out = cv2.VideoWriter('/home/strata/output.avi', cv2.VideoWriter_fourcc(*"MJPG"), FRAMERATE, (H_RESOLUTION, V_RESOLUTION))
 
     # Create node
     rospy.init_node('StationDetection')
@@ -265,9 +272,10 @@ if __name__ == "__main__":
         speed_pub = rospy.Publisher("wheelControl/target_speed", Float32, queue_size=100) # Publishes the target speed to the wheel controller
         angle_pub = rospy.Publisher("wheelControl/turn_angle", Float32, queue_size=100) # Publishes the target turn angle to the wheel controller
 
+        rospy.loginfo(str(target_points))
 
         # Main loop should be run at the framerate
-        rate = rospy.Rate(FRAMERATE)
+        rate = rospy.Rate(FRAMERATE*2)
 
 
         last_detection = 0 # Timestamp of the last time the station was detected
@@ -283,13 +291,16 @@ if __name__ == "__main__":
 
         # Static variables for final guidance
         # The station wont be able to be detected once we are close enough to charge off of so we need to just blindly move forward either until we have gone too far or we are docked
-        initial_position = position # Stores position of the motors at the moment the station went out of view
+        initial_position = position[:] # Stores position of the motors at the moment the station went out of view
         final_guidance = False # True if we are in the final guidance state
+        
+        last_rotation = 0
 
         try:
+            rospy.loginfo("In try")
             while not rospy.is_shutdown():
                 # Wait until this is supposed to run again
-                rate.sleep()
+                #rate.sleep()
 
                 # Read video frame
                 ret_val, frame = video_capture.read()
@@ -302,8 +313,6 @@ if __name__ == "__main__":
                     frame = cv2.putText(frame, "Confidence: " + str(confidence), (0, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
                     for i in range(len(seen_points)):
                         frame = cv2.circle(frame, (int(np.round(seen_points[i][0])), int(np.round(seen_points[i][1]))), 5, (0, 0, 255), -1)
-                    
-                        frame = cv2.putText(frame, str(i), (int(seen_points[i][0]), int(seen_points[i][1])), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
                     
                 
                 # Check if detection failed
@@ -322,9 +331,6 @@ if __name__ == "__main__":
                             detected = False
                             rospy.loginfo("Lost detection")
 
-                            # Save the position of the motors for final guidance
-                            initial_position = position[:]
-
                             # Check if we are close enough to use final guidance
                             if previous_distance[-1] <= APPROACH_DISTANCE:
                                 final_guidance = True
@@ -335,13 +341,19 @@ if __name__ == "__main__":
                             detected_pub.publish(data_to_send)
 
                         if final_guidance: # If we dont see the station and we are in final guidance
-                            rospy.loginfo(position)
                             rospy.loginfo("Final guidance: " + str(np.mean(position) - np.mean(initial_position)) + "\tPrevious distance: " + str(previous_distance[-1]))
 
                             # Check if we have docked or we moved too far
-                            if GPIO.input(STATION_PIN) or np.mean(position) - np.mean(initial_position) > previous_distance[-1]*1.2:
+                            pin = GPIO.input(STATION_PIN)
+                            dist = np.mean(position) - np.mean(initial_position) > previous_distance[-1]*0.8
+                            if pin or dist:
                                 # Disable final guidance
                                 final_guidance = False
+                                if pin:
+                                    rospy.loginfo("Final guidance complete. Reached station")
+                                
+                                if dist:
+                                    rospy.loginfo("Final guidance complete. Reached distance limit")
 
                                 # Stop motors
                                 data_to_send = Float32()
@@ -365,6 +377,11 @@ if __name__ == "__main__":
                             data_to_send.data = 0
                             speed_pub.publish(data_to_send)
                             angle_pub.publish(data_to_send)
+                    elif not final_guidance:
+                        # Move straight
+                        data_to_send = Float32()
+                        data_to_send.data = last_rotation
+                        angle_pub.publish(data_to_send)
 
                     # We didnt detect anything so skip handling data
                     if SAVE_VIDEO:
@@ -372,6 +389,56 @@ if __name__ == "__main__":
                     continue
 
 
+                
+                
+                # Sort the detected points to match up with the expected points
+                seen_points = np.array(seen_points, dtype='float32')
+                seen_points = seen_points[np.lexsort((seen_points[:,0], seen_points[:,1]))]
+                
+                order_with = np.array(seen_points[2:-2])
+                
+                for i in np.array(seen_points[0:2]):
+                    if all(i[0] <= order_with[:, 0]) and all(i[1] <= order_with[:, 1]):
+                        seen_points[0] = i
+                        
+                    if all(i[0] >= order_with[:, 0]) and all(i[1] <= order_with[:, 1]):
+                        seen_points[1] = i
+                        
+                for i in np.array(seen_points[-2:]):
+                    if all(i[0] <= order_with[:, 0]) and all(i[1] >= order_with[:, 1]):
+                        seen_points[-2] = i
+                        
+                    if all(i[0] >= order_with[:, 0]) and all(i[1] >= order_with[:, 1]):
+                        seen_points[-1] = i
+                
+                if SAVE_VIDEO:
+                    for i in range(len(seen_points)):
+                        frame = cv2.putText(frame, str(i), (int(seen_points[i][0]), int(seen_points[i][1])), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+                
+                # Solve pose estimation on both potential orders of points
+                success, rotation_vector, translation_vector = cv2.solvePnP(target_points, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
+
+                if not success:
+                    rospy.loginfo("solvePnP Fail")
+                    if SAVE_VIDEO:
+                        out.write(frame)
+                    continue
+
+                # Figure out which pose estimation has the least reprojection error
+                mean_error = (not success)*100000
+                for i in range(len(seen_points)):
+                    outputPoints, _ = cv2.projectPoints(target_rotated_1[i], rotation_vector, translation_vector, calibration_matrix, np.zeros((4, 1)))
+
+                    error = cv2.norm(np.array(seen_points[i], dtype='float32'), np.array(outputPoints[0][0], dtype='float32'), cv2.NORM_L2)/len(outputPoints)
+
+                    mean_error += error/len(seen_points)
+                
+                if mean_error > MAX_REPROJECTION_ERROR:
+                    rospy.loginfo("Reprojection failed: " + str(mean_error))
+                    if SAVE_VIDEO:
+                        out.write(frame)
+                    continue
+                
                 if not detected: # If this is the first time detecting the station
                     detection_count += 1
                     rospy.loginfo(detection_count)# Publish speed and turn data to wheel controller
@@ -403,55 +470,22 @@ if __name__ == "__main__":
                 # Update the last detection time and make sure final guidance is disabled
                 last_detection = time.time()
                 final_guidance = False
+            
                 
-                # Sort the detected points to match up with the expected points
-                seen_points = np.array(seen_points, dtype='float32')
-                seen_points = seen_points[np.lexsort((seen_points[:,0], seen_points[:,1]))]
-                
-                # Solve pose estimation on both potential orders of points
-                success = [0, 0]
-                rotation_vector = [0, 0]
-                translation_vector = [0, 0]
-                success[0], rotation_vector[0], translation_vector[0] = cv2.solvePnP(target_rotated_1, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
-                success[1], rotation_vector[1], translation_vector[1] = cv2.solvePnP(target_rotated_2, seen_points, calibration_matrix, np.zeros((4, 1)), flags=cv2.SOLVEPNP_IPPE)
-
-                if not any(success):
-                    if SAVE_VIDEO:
-                        out.write(frame)
-                    continue
-
-                # Figure out which pose estimation has the least reprojection error
-                mean_error = [(not success[0])*100000, (not success[1])*100000]
-                for i in range(len(seen_points)):
-                    for j in range(2):
-                        outputPoints, _ = cv2.projectPoints(target_rotated_1[i], rotation_vector[j], translation_vector[j], calibration_matrix, np.zeros((4, 1)))
-
-                        error = cv2.norm(np.array(seen_points[i], dtype='float32'), np.array(outputPoints[0][0], dtype='float32'), cv2.NORM_L2)/len(outputPoints)
-
-                        mean_error[j] += error/len(seen_points)
-
-                min_idx = np.argmin(mean_error)
-                distance = np.linalg.norm(translation_vector[min_idx])
+                #translation_vector[0] -= 50
+                distance = np.linalg.norm(translation_vector[0::2])#np.abs(translation_vector[min_idx][2])
                 
                 # THIS SHOULD BE IMPROVED
                 # This just gets the rotation to the station by averaging the x coordinate of the LEDs and converting it to a rotation using the known field of view of the camera
                 # It has a bunch of issues and the pose estimation rotation vector should be used but I'm not smart enough to figure that out
                 rotation = (np.mean([i[0] for i in seen_points]) - H_RESOLUTION/2)/H_RESOLUTION*FOV
+                last_rotation = copy.copy(rotation)
                 
 
                 # Convert the rotation vector from solvePnP to euler rotation
                 # This isnt actually used in the current code but I want to keep it because this is what it should be doing
-                '''rotation_matrix1 = cv2.Rodrigues(rotation_vector1)[0]
-                rotation_matrix2 = cv2.Rodrigues(rotation_vector2)[0]
-                rotation_vector1 = R.from_matrix(rotation_matrix1).as_rotvec()
-                rotation_vector2 = R.from_matrix(rotation_matrix2).as_rotvec()
-                
-                # Convert to degrees
-                for i in rotation_vector1:
-                    i *= 180/np.pi
-                    
-                for i in rotation_vector2:
-                    i *= 180/np.pi'''
+                rotation_matrix = cv2.Rodrigues(rotation_vector)[0]
+                rotation_vector = R.from_dcm(rotation_matrix).as_rotvec()
                 
                 # Add distance and rotation to the averaging buffer
                 previous_distance.append(distance)
@@ -467,6 +501,8 @@ if __name__ == "__main__":
                 # Calculate the average distance and rotation
                 distance = np.mean(previous_distance)
                 rotation = np.mean(previous_rotation)
+                
+                initial_position = position[:]
 
                 # PID
                 distance_error = distance
@@ -485,7 +521,10 @@ if __name__ == "__main__":
 
                 
                 data_to_send = Float32()
-                data_to_send.data = rotation*TURNING_GAIN
+                if rotation < 0:
+                    data_to_send.data = -np.sqrt(np.abs(rotation))*TURNING_GAIN
+                else:
+                    data_to_send.data = np.sqrt(np.abs(rotation))*TURNING_GAIN
                 angle_pub.publish(data_to_send)
 
 
@@ -498,9 +537,13 @@ if __name__ == "__main__":
                     
                     frame = cv2.putText(frame, "Rotation: " + str(rotation), (0, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
 
-                    frame = cv2.putText(frame, "Reprojection Error: " + str(mean_error[min_idx]), (0, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+                    frame = cv2.putText(frame, "Reprojection Error: " + str(mean_error), (0, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
                     
-                    if (not success[0]) and (not success[1]):
+                    frame = cv2.putText(frame, "Rotation Vector: " + str(rotation_vector*180/np.pi), (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+                    
+                    frame = cv2.putText(frame, "Translation Vector: " + str(translation_vector), (0, 180), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1, 2)
+                    
+                    if not success:
                         frame = cv2.putText(frame, "FAILED", (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1, 2)
                 
                     out.write(frame)
