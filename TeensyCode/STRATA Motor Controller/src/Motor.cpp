@@ -7,7 +7,7 @@
 #define ENC_PPR (6*2*30.0)
 #define MAX_RPM (11000/30.0)
 
-#define Kp 100.0
+#define Kp 150.0
 #define Ki 40.0
 #define Kd 0.0
 
